@@ -1,7 +1,2 @@
-**Kiran's Study Notes (Table of Contents)**
-
-[TOCM]
-
-[TOC]
-
-# Heading 1
+# Welcome to Kiran's Study Notes
+Refer to the [Wiki pages](https://github.com/kirandhamodharan/studynotes/wiki) for the notes.
