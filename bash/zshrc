@@ -1,0 +1,5 @@
+export PS1='%F{green}%D{%m/%d}%f %F{red}%*%f %F{226}%~%f %F{46}$%f'
+export JAVA_HOME="PATH_TO_JAVA_INSTALL_DIR/jdk-16.0.1.jdk/Contents/Home"
+export PATH="${PATH}:PATH_TO_INSTALL_DIR/jdk-16.0.1.jdk/Contents/Home/bin"
+
+alias vs="/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code"%
