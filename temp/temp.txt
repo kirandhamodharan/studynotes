@@ -1,0 +1,47 @@
+resource "aws_cloudwatch_event_rule" "test" {
+  name = "frombuild"
+  #schedule_expression = "cron(0 1 1 * ? *)" #First day of the month
+  schedule_expression = "cron(0 1 ? * * *)" #everyday
+  event_bus_name      = "default"
+  description         = ""
+  is_enabled          = true
+  tags                = var.tags
+}
+
+resource "aws_cloudwatch_event_target" "test" {
+  rule     = aws_cloudwatch_event_rule.test.name
+  arn      = "arn:aws:codebuild:us-east-1:625879689773:project/test"
+  input    = "{\n  \"sourceVersion\": \"refs/heads/main\"\n}"
+  role_arn = aws_iam_role.test_role.arn
+
+}
+
+resource "aws_iam_role" "test_role" {
+  name = "test_role"
+
+  assume_role_policy = jsonencode({
+    "Version" : "2012-10-17",
+    "Statement" : [
+      {
+        "Effect" : "Allow",
+        "Principal" : {
+          "Service" : "events.amazonaws.com"
+        },
+        "Action" : "sts:AssumeRole"
+      }
+    ]
+  })
+  tags = var.tags
+
+  inline_policy {
+    name   = "policy-8675309"
+    policy = data.aws_iam_policy_document.inline_policy.json
+  }
+}
+
+data "aws_iam_policy_document" "inline_policy" {
+  statement {
+    actions   = ["ec2:DescribeAccountAttributes"]
+    resources = ["*"]
+  }
+}
