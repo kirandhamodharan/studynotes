@@ -10,7 +10,7 @@ resource "aws_cloudwatch_event_rule" "test" {
 
 resource "aws_cloudwatch_event_target" "test" {
   rule     = aws_cloudwatch_event_rule.test.name
-  arn      = "arn:aws:codebuild:us-east-1:625879689773:project/test"
+  arn      = "arn:aws:codebuild:us-east-1:1234567890:project/test"
   input    = "{\n  \"sourceVersion\": \"refs/heads/main\"\n}"
   role_arn = aws_iam_role.test_role.arn
 
@@ -41,7 +41,7 @@ resource "aws_iam_role" "test_role" {
 
 data "aws_iam_policy_document" "inline_policy" {
   statement {
-    actions   = ["ec2:DescribeAccountAttributes"]
-    resources = ["*"]
+    actions   = ["codebuild:StartBuild"]
+    resources = ["arn:aws:codebuild:us-east-1:1234567890:project/testbuild"]
   }
 }
