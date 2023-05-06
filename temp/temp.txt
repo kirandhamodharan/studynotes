@@ -34,8 +34,18 @@ resource "aws_iam_role" "test_role" {
   tags = var.tags
 
   inline_policy {
-    name   = "policy-8675309"
-    policy = data.aws_iam_policy_document.inline_policy.json
+    name = "my_inline_policy"
+
+    policy = jsonencode({
+      Version = "2012-10-17"
+      Statement = [
+        {
+          Action   = ["codebuild:StartBuild"]
+          Effect   = "Allow"
+          Resource = "arn:aws:codebuild:us-east-1:1234567890:project/testbuild"
+        },
+      ]
+    })
   }
 }
 
