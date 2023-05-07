@@ -11,7 +11,16 @@ resource "aws_cloudwatch_event_rule" "test" {
 resource "aws_cloudwatch_event_target" "test" {
   rule     = aws_cloudwatch_event_rule.test.name
   arn      = "arn:aws:codebuild:us-east-1:1234567890:project/test"
-  input    = "{\n  \"sourceVersion\": \"refs/heads/main\"\n}"
+    input = jsonencode({
+    "sourceVersion" : "refs/heads/main",
+    "environmentVariablesOverride" : [
+      {
+        "name" : "NOTIFICATION_IND",
+        "type" : "PLAINTEXT",
+        "value" : "true"
+      }
+    ]
+  })
   role_arn = aws_iam_role.test_role.arn
 
 }
@@ -55,3 +64,9 @@ data "aws_iam_policy_document" "inline_policy" {
     resources = ["arn:aws:codebuild:us-east-1:1234567890:project/testbuild"]
   }
 }
+
+//Sample check
+if [[ $NOTIFICATION_IND == "true" ]]
+then
+    echo "Send NOTIFICATION..."
+fi
