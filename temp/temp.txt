@@ -70,3 +70,6 @@ if [[ $NOTIFICATION_IND == "true" ]]
 then
     echo "Send NOTIFICATION..."
 fi
+
+# Twice a month
+"cron(0 9 1,15 * ? *)"
