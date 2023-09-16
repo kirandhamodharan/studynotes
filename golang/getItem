@@ -1,0 +1,29 @@
+    import (
+    	"context"
+    	"github.com/aws/aws-sdk-go-v2/aws"
+    	"github.com/aws/aws-sdk-go-v2/config"
+    	"github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue"
+    	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
+    	"github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
+    	"log"
+    )
+      
+    	cfg, err := config.LoadDefaultConfig(context.TODO())
+    	if err != nil {
+    		log.Fatalf("unable to load AWS SDK config, %v", err)
+    	}
+    
+    	dynamodbClient := dynamodb.NewFromConfig(cfg)
+    	id := "001"
+    	getItemInput := &dynamodb.GetItemInput{
+    		Key: map[string]types.AttributeValue{
+    			"Id": &types.AttributeValueMemberS{Value: id},
+    		},
+    		TableName:            aws.String("TableName"),
+    		ConsistentRead:       aws.Bool(true),
+    		ProjectionExpression: aws.String("Id, Name, Timestamp"),
+    	}
+    	getItemResponse, err := dynamodbClient.GetItem(context.TODO(), getItemInput)
+    	if err != nil {
+    		log.Fatalf("get work unit failed, %v", err)
+    	}
