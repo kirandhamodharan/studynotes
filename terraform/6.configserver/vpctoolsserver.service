@@ -1,0 +1,15 @@
+[Unit]
+Description=Node service for vpctools App
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=root
+ExecStart=/root/.nvm/versions/node/v14.16.0/bin/node /vpctoolsserver/index.js
+
+
+[Install]
+WantedBy=multi-user.target

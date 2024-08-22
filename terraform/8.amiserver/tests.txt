@@ -1,0 +1,9 @@
+1. Group for ec2-user - should have 'apache'
+2. node -v
+3. cat /etc/systemd/system/vpctoolsserver.service
+4. cat /etc/httpd/conf/httpd.conf - 
+    Check - "Include /cloudtechbits/blogs/conf/cloudtechbits.conf" (latest)
+    Check - #Listen 80
+5.  Run the query
+    SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'ctb_blog_db';
+
